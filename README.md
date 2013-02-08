@@ -7,6 +7,7 @@ a simple but powerfull application server write by c++ with exist libraries
 EchoServer
 ----------
 * config and restart nginx.
+
   server {
       listen       80;
       server_name  localhost;
@@ -24,10 +25,13 @@ EchoServer
   }
 
 * start fastcgi application.
+
   /usr/local/EchoServer/start.sh
 
 * test with browser.
+
   http://localhost/EchoServer?msg=hello 
 
 * test with test application.
+
   /usr/local/EchoServer/test/test 127.0.0.1 80
