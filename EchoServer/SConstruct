@@ -1,0 +1,1 @@
+Program("EchoServer", ['EchoServer.cpp', "/home/tangxinfa/opensource/cgicc-3.2.9/contrib/FCgiIO.cpp"], CPPPATH=["/home/tangxinfa/opensource/cgicc-3.2.9/contrib"], CCFLAGS='-g', LIBS=['cgicc', 'fcgi', 'fcgi++', 'boost_thread', 'boost_system', 'boost_program_options'])

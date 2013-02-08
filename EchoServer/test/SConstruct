@@ -1,0 +1,1 @@
+Program("test", Glob("*.c"), CFLAGS="-std=c99 -g")
