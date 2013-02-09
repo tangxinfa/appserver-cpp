@@ -7,22 +7,22 @@ a simple but powerfull application server write by c++ with exist libraries
 EchoServer
 ----------
 * config and restart nginx.
-
->  server {
->      listen       80;
->      server_name  localhost;
->      
->      ...
->      
->      location ~ /EchoServer$ {
->         root           "/usr/local/EchoServer";
->         fastcgi_pass   127.0.0.1:8000;
->         fastcgi_param  SCRIPT_FILENAME  "/usr/local/EchoServer/$fastcgi_script_name";
->         include        fastcgi_params;
->      } 
->      
->      ...
->  }
+  
+    server {
+        listen       80;
+        server_name  localhost;
+      
+        ...
+      
+        location ~ /EchoServer$ {
+            root           "/usr/local/EchoServer";
+            fastcgi_pass   127.0.0.1:8000;
+            fastcgi_param  SCRIPT_FILENAME  "/usr/local/EchoServer/$fastcgi_script_name";
+            include        fastcgi_params;
+        } 
+      
+        ...
+    }
 
 * start fastcgi application.
 
