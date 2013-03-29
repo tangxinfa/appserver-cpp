@@ -13,6 +13,7 @@
 
 const char* g_server_ip = "127.0.0.1";
 unsigned short g_server_port = 80;
+const char* g_server_host = "localhost";
 int g_concurrent_connections = 1000;
 
 int g_epoll_fd = -1;
@@ -46,13 +47,13 @@ void init_fd_data(int fd)
 {
     if(g_fd_data[fd] == NULL)
     {
-        static const char* request_format = "GET /EchoServer?msg=%s HTTP/1.1\r\nhost: 127.0.0.1\r\nConnection: close\r\n\r\n";
+        static const char* request_format = "GET /EchoServer?msg=%s HTTP/1.1\r\nhost: %s\r\nConnection: close\r\n\r\n";
         static char msg[100];
         random_str(msg, sizeof(msg));
         static char request[1024];
         g_fd_data[fd] = (fd_data_t*)malloc(sizeof(fd_data_t));
         memset(g_fd_data[fd], 0, sizeof(fd_data_t));
-        snprintf(request, sizeof(request), request_format, msg);
+        snprintf(request, sizeof(request), request_format, msg, g_server_host);
         g_fd_data[fd]->request = strdup(request);        
     }    
 }
@@ -168,7 +169,7 @@ int main(int argc, char *argv[])
 {
     if(argc < 3)
     {
-        printf("usage: %s <server ip> <server port> [concurrent connections default=%d]\n", argv[0], g_concurrent_connections);
+        printf("usage: %s <server ip> <server port> [concurrent connections default=%d] [host name default=%s]\n", argv[0], g_concurrent_connections, g_server_host);
         exit(EXIT_FAILURE);
     }
     
@@ -178,7 +179,11 @@ int main(int argc, char *argv[])
     {
         g_concurrent_connections = atoi(argv[3]);
     }
-
+    if(argc > 4)
+    {
+        g_server_host = argv[4];
+    }
+    
     srand(time(NULL));
 
     g_epoll_fd = epoll_create(1);

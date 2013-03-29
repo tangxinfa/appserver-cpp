@@ -19,21 +19,24 @@ public:
     {
     }
 
-    virtual void handle(const HttpRequest& request, HttpResponse& response) = 0;
+    virtual void hoandle(const HttpRequest& request, HttpResponse& response) = 0;
 
     void run()
     {
-        while(true)
+        FCGX_Request raw_request;
+        FCGX_InitRequest(&raw_request, 0, 0);
+        
+        while(FCGX_Accept_r(&raw_request) == 0)
         {
-            FCGX_Request raw_request;
-            if(FCGX_InitRequest(&raw_request, 0, 0) == 0 &&
-               FCGX_Accept_r(&raw_request) == 0)
-            {
-                HttpResponse response(raw_request);
-                HttpRequest request(&response);
+            HttpResponse response(raw_request);
+            HttpRequest request(&response);
+            try{
                 handle(request, response);
-                FCGX_Finish_r(&raw_request);
+            }catch(std::exception& e){
+                response.err() << "Exception: " << e.what() << std::endl;
+                throw;
             }
+            FCGX_Finish_r(&raw_request);
         }
     }
 };
