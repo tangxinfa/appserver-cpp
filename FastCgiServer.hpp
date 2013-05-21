@@ -19,7 +19,7 @@ public:
     {
     }
 
-    virtual void hoandle(const HttpRequest& request, HttpResponse& response) = 0;
+    virtual void handle(const HttpRequest& request, HttpResponse& response) = 0;
 
     void run()
     {

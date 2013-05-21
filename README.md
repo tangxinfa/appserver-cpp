@@ -1,14 +1,14 @@
 appserver-cpp
 =============
 
-a simple but powerfull application server framework write by c++ with exist libraries
-
+A simple but powerfull fastcgi web application server framework write by c++ with exist libraries.
 
 EchoServer
 ----------
-implementation echo server with appserver-cpp framework.
+Implementation echo server with appserver-cpp framework.
 
 * config and restart nginx.
+
         worker_processes 4;
 
         upstream EchoServer_backend {
@@ -21,7 +21,7 @@ implementation echo server with appserver-cpp framework.
             server_name  localhost;
             ...
             location ~ /EchoServer$ {
-                root           "/usr/local/EchoServer";
+                root "/usr/local/EchoServer";
                 fastcgi_keep_conn on;
                 fastcgi_send_timeout 5s;
                 fastcgi_read_timeout 5s;

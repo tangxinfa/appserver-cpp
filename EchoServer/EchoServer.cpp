@@ -24,21 +24,21 @@ int main(int argc, char *argv[])
     {
         boost::program_options::options_description options("command line options");
         options.add_options()
-			("help,h", "use -h or --help to list all arguments")
-			("thread_num,t", boost::program_options::value<std::size_t>(&thread_num)->default_value(thread_num), "number of threads process request concurrently");
-		boost::program_options::variables_map variables_map;
-		boost::program_options::store(boost::program_options::parse_command_line(argc, argv, options), variables_map);
-		boost::program_options::notify(variables_map);
-		if(variables_map.count("help"))
-		{
-			std::cout << options << std::endl;
-			return 0;
-		}        
-	}catch(std::exception& e)
-	{
-		std::cerr << "parse command line error: " << e.what() << std::endl;
-		::exit(1);
-	}
+            ("help,h", "use -h or --help to list all arguments")
+            ("thread_num,t", boost::program_options::value<std::size_t>(&thread_num)->default_value(thread_num), "number of threads process request concurrently");
+        boost::program_options::variables_map variables_map;
+        boost::program_options::store(boost::program_options::parse_command_line(argc, argv, options), variables_map);
+        boost::program_options::notify(variables_map);
+        if(variables_map.count("help"))
+        {
+            std::cout << options << std::endl;
+            return 0;
+        }        
+    }catch(std::exception& e)
+    {
+        std::cerr << "parse command line error: " << e.what() << std::endl;
+        ::exit(1);
+    }
 
     EchoServer server;
     boost::thread_group threads;
